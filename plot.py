@@ -6,7 +6,7 @@ def display_learning_curves(
     history: keras.callbacks.History, save_name: str = "training_graphs"
 ) -> None:
     """Plot the Loss and Accuracy for a Training Run."""
-    _, (ax1, ax2) = plt.subplots(1, 2, figsize=(15, 30))
+    _, (ax1, ax2) = plt.subplots(1, 2, figsize=(30, 15))
 
     ax1.plot(history.history["loss"])
     ax1.plot(history.history["val_loss"])
