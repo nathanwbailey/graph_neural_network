@@ -1,5 +1,7 @@
-import numpy as np
+from typing import Any
+
 import tensorflow as tf
+from numpy.typing import NDArray
 from tensorflow import keras
 
 
@@ -17,15 +19,15 @@ def create_feed_forward_layer(
     return keras.Sequential(ffn_layers)
 
 
-class GraphConvLayer(keras.layers.Layer):
+class GraphConvLayer(keras.layers.Layer):  # type: ignore[misc]
     """Creates a Graph Convolutional Layer."""
 
     def __init__(
         self,
         hidden_units: list[int],
         dropout_rate: float = 0.2,
-        aggregration_type="mean",
-        combination_type="concat",
+        aggregration_type: str = "mean",
+        combination_type: str = "concat",
     ) -> None:
         """Init variables and layers."""
         super().__init__()
@@ -50,7 +52,7 @@ class GraphConvLayer(keras.layers.Layer):
 
     def aggregate(
         self,
-        node_indices: np.ndarray,
+        node_indices: NDArray[Any],
         neighbour_messages: tf.Tensor,
         node_representations: tf.Tensor,
     ) -> tf.Tensor:
@@ -93,13 +95,15 @@ class GraphConvLayer(keras.layers.Layer):
         return node_embeddings
 
     def call(
-        self, inputs: tuple[tf.Tensor, tf.Tensor, np.ndarray | None]
+        self, inputs: tuple[tf.Tensor, NDArray[Any], tf.Tensor | None]
     ) -> tf.Tensor:
         """Forward Pass."""
         node_representations, edges, edge_weights = inputs
         node_indices, neighbour_indices = edges[0], edges[1]
-        # Expand the representations so we create a copy of the neighbour for each node that links to it
-        # We pass each neighbour representation through the same weight matrix, so same result for same representation
+        # Expand the representations so we create a copy of the
+        # neighbour for each node that links to it
+        # We pass each neighbour representation through the same weight matrix
+        # So we get the same result for same representation
         # Allows us to share the weight for the layer
         neighbour_representations = tf.gather(
             node_representations, neighbour_indices

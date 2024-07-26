@@ -1,16 +1,18 @@
-import numpy as np
+from typing import Any
+
 import tensorflow as tf
+from numpy.typing import NDArray
 from tensorflow import keras
 
 from model_building_blocks import GraphConvLayer, create_feed_forward_layer
 
 
-class GNNNodeClassifier(keras.models.Model):
+class GNNNodeClassifier(keras.models.Model):  # type: ignore[misc]
     """Graph Neural Network Model."""
 
     def __init__(
         self,
-        graph_info: tuple[tf.Tensor, tf.Tensor, np.ndarray | None],
+        graph_info: tuple[tf.Tensor, NDArray[Any], tf.Tensor | None],
         num_classes: int,
         hidden_units: list[int],
         aggregation_type: str = "sum",
@@ -51,7 +53,7 @@ class GNNNodeClassifier(keras.models.Model):
         )
         self.compute_logits = keras.layers.Dense(units=num_classes)
 
-    def call(self, input_node_indices: np.ndarray) -> tf.Tensor:
+    def call(self, input_node_indices: NDArray[Any]) -> tf.Tensor:
         """Model Forward Pass."""
         x = self.preprocess(self.node_features)
         x1 = self.conv1((x, self.edges, self.edge_weights))

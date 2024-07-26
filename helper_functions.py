@@ -1,11 +1,13 @@
-import numpy as np
+from typing import Any
+
+from numpy.typing import NDArray
 from tensorflow import keras
 
 
 def compile_and_train_model(
     model: keras.models.Model,
-    x_train: np.ndarray,
-    y_train: np.ndarray,
+    x_train: NDArray[Any],
+    y_train: NDArray[Any],
     learning_rate: float,
     num_epochs: int,
     batch_size: int,

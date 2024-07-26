@@ -82,10 +82,10 @@ num_classes = len(class_idx)
 print(f"Number of Features: {num_features}")
 print(f"Number of Classes: {num_classes}")
 
-x_train = train_data.paper_id.to_numpy()
-x_test = test_data.paper_id.to_numpy()
-y_train = train_data["subject"]
-y_test = test_data["subject"]
+x_train = train_data.paper_id.to_numpy()  # type: ignore[attr-defined]
+x_test = test_data.paper_id.to_numpy()  # type: ignore[attr-defined]
+y_train = train_data["subject"]  # type: ignore[call-overload]
+y_test = test_data["subject"]  # type: ignore[call-overload]
 
 # Source paper cites target papers
 # Edges are laid out like:
@@ -129,6 +129,6 @@ history = compile_and_train_model(
 # Plot learning curves
 display_learning_curves(history)
 
-x_test = test_data.paper_id.to_numpy()
+x_test = test_data.paper_id.to_numpy()  # type: ignore[attr-defined]
 _, test_accuracy = gnn_model.evaluate(x=x_test, y=y_test, verbose=0)
 print(f"Test accuracy: {round(test_accuracy * 100, 2)}%")
