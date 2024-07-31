@@ -4,7 +4,7 @@ Implements a Graph Neural Network in Keras on the Cora dataset: https://paperswi
 
 Further information can be found in the following blog post:
 
-
+https://nathanbaileyw.medium.com/implementing-a-graph-neural-network-in-keras-91e8300f1ba4
 
 ### Code:
 The main code is located in the following files:
